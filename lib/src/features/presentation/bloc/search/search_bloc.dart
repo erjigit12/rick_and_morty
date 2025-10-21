@@ -36,13 +36,12 @@ class PersonSearchBloc extends Bloc<PersonSearchEvent, PersonSearchState> {
   }
 
   String mapFailureToMessage(Failure failure) {
-    switch (failure.runtimeType) {
-      case ServerFailure():
-        return SERVER_FAILURE_MESSAGE;
-      case CacheFailure():
-        return CACHED_FAILURE_MESSAGE;
-      default:
-        return 'Unexpected failure';
+    if (failure is ServerFailure) {
+      return SERVER_FAILURE_MESSAGE;
+    } else if (failure is CacheFailure) {
+      return CACHED_FAILURE_MESSAGE;
+    } else {
+      return 'Unexpected failure';
     }
   }
 }
